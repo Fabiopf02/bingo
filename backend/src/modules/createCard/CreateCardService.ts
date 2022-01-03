@@ -36,6 +36,12 @@ export class CreateCardService {
       throw new Error('Operation not permitted!');
     }
 
+    const cardsExists = await this.cardsRepository.findByList(cardListId);
+
+    if (cardsExists) {
+      throw new Error('The cards have already been generated');
+    }
+
     const cards = this.generateCards(cardListExists.numberOfCards, cardListId);
 
     const response = await this.cardsRepository.save(cards);
