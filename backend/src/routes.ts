@@ -8,6 +8,7 @@ import { createSessionController } from './modules/createSession';
 import { createUserController } from './modules/createUser';
 import { listCardListController } from './modules/listCardList';
 import { listCardsController } from './modules/listCards';
+import { getExistingCardController } from './modules/getExistingCard';
 
 const routes = express.Router();
 
@@ -99,6 +100,20 @@ routes.get(
   }),
   async (req, res) => {
     createPDFController.handle(req, res);
+  },
+);
+
+routes.get(
+  '/cards_exists',
+  celebrate({
+    [Segments.HEADERS]: Joi.object()
+      .keys({
+        listid: Joi.string().required(),
+      })
+      .unknown(),
+  }),
+  async (req, res) => {
+    getExistingCardController.handle(req, res);
   },
 );
 
