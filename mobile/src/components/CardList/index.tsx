@@ -7,17 +7,22 @@ import {Container} from './styles';
 
 const CardList: React.FC = () => {
   const [cardList, setCardList] = useState<ICardList[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  async function loadCardList() {
+    try {
+      setLoading(true);
+      const response = await api.get<ICardList[]>('/cardlist');
+      setCardList(response.data);
+    } catch (err: any) {
+      Alert.alert('Erro', err.response.data.error);
+    } finally {
+      setLoading(false);
+    }
+  }
 
   useEffect(() => {
-    async function getCards() {
-      try {
-        const response = await api.get<ICardList[]>('/cardlist');
-        setCardList(response.data);
-      } catch (err) {
-        Alert.alert('Erro', err.response.data.error);
-      }
-    }
-    getCards();
+    loadCardList();
   }, []);
 
   const renderItem = ({item}: {item: ICardList}) => <Card data={item} />;
@@ -27,6 +32,8 @@ const CardList: React.FC = () => {
       data={cardList}
       keyExtractor={item => item._id}
       renderItem={renderItem}
+      refreshing={loading}
+      onRefresh={loadCardList}
     />
   );
 };
