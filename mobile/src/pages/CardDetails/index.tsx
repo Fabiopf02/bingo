@@ -3,6 +3,7 @@ import {NavigationProps} from '../../types/types';
 import {ThemeContext} from 'styled-components';
 import {formatDate} from '../../utils/format';
 import {Container, Title, Text, Rect, Row} from './styles';
+import GenerateCardsButton from '../../components/GenerateCardsButton';
 
 import Button from '../../components/Button';
 import {api} from '../../services/api';
@@ -14,6 +15,7 @@ interface IResponse {
 const CardDetails: React.FC<NavigationProps<'CardDetails'>> = ({route}) => {
   const {colors} = useContext(ThemeContext);
   const [cardsExists, setCardsExists] = useState(true);
+  const [change, setChange] = useState('');
   const cardList = route.params;
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const CardDetails: React.FC<NavigationProps<'CardDetails'>> = ({route}) => {
       } catch {}
     }
     checkIfCardsExists();
-  }, [cardList]);
+  }, [cardList, change]);
 
   return (
     <Container>
@@ -47,10 +49,10 @@ const CardDetails: React.FC<NavigationProps<'CardDetails'>> = ({route}) => {
       <Text>Criado em: {formatDate(cardList.createdAt)}</Text>
       <Text>Atualizado em: {formatDate(cardList.createdAt)}</Text>
 
-      <Button
-        text="Gerar Cartelas"
+      <GenerateCardsButton
+        setChange={setChange}
         disabled={cardsExists}
-        bg={colors.primary}
+        listId={cardList._id}
       />
       <Button
         text="Baixar Cartelas"
