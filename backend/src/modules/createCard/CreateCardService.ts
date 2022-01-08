@@ -38,7 +38,7 @@ export class CreateCardService {
 
     const cardsExists = await this.cardsRepository.findByList(cardListId);
 
-    if (cardsExists) {
+    if (cardsExists.length) {
       throw new Error('The cards have already been generated');
     }
 
