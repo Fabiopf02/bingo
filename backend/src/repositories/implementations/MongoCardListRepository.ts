@@ -14,7 +14,9 @@ export class MongoCardListRepository implements ICardListRepository {
   }
 
   async findByUser(userId: string): Promise<CardList[]> {
-    const response = await CardSchema.find({ ownerId: userId });
+    const response = await CardSchema.find({ ownerId: userId }).sort({
+      createdAt: 'desc',
+    });
 
     return response;
   }
