@@ -21,9 +21,11 @@ interface IProps {
   title: string;
   numbers: number[][];
   qrcode?: string;
+  code?: number;
 }
 
-const Card: React.FC<IProps> = ({title, numbers, qrcode}) => {
+const Card: React.FC<IProps> = ({title, numbers, qrcode, code = 1}) => {
+  const codeText = '0'.repeat(6 - String(code).length) + code;
   return (
     <Container>
       <Header>
@@ -52,7 +54,7 @@ const Card: React.FC<IProps> = ({title, numbers, qrcode}) => {
           ))}
         </Numbers>
       </Body>
-      <Cod>Cód.: 0001</Cod>
+      <Cod>Cód.: {codeText}</Cod>
     </Container>
   );
 };

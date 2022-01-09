@@ -1,13 +1,14 @@
 import React, {useContext} from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ThemeContext} from 'styled-components';
-import {ICardList} from './types/types';
+import {ICardList, IViewCardsParams} from './types/types';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Home from './pages/Home';
 import CardDetails from './pages/CardDetails';
 import NewCardList from './pages/NewCardList';
+import ViewCards from './pages/ViewCards';
 
 export type StackParamList = {
   Login: undefined;
@@ -15,6 +16,7 @@ export type StackParamList = {
   Home: undefined;
   CardDetails: ICardList;
   NewCardList: undefined;
+  ViewCards: IViewCardsParams;
 };
 
 const Stack = createNativeStackNavigator<StackParamList>();
@@ -52,6 +54,11 @@ const Routes: React.FC = () => {
         name="NewCardList"
         options={{title: 'Novo'}}
         component={NewCardList}
+      />
+      <Stack.Screen
+        name="ViewCards"
+        options={{title: 'Cartelas'}}
+        component={ViewCards}
       />
     </Stack.Navigator>
   );

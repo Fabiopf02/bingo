@@ -12,7 +12,10 @@ interface IResponse {
   cardsExists: boolean;
 }
 
-const CardDetails: React.FC<NavigationProps<'CardDetails'>> = ({route}) => {
+const CardDetails: React.FC<NavigationProps<'CardDetails'>> = ({
+  route,
+  navigation,
+}) => {
   const {colors} = useContext(ThemeContext);
   const [cardsExists, setCardsExists] = useState(true);
   const [change, setChange] = useState('');
@@ -31,6 +34,13 @@ const CardDetails: React.FC<NavigationProps<'CardDetails'>> = ({route}) => {
     }
     checkIfCardsExists();
   }, [cardList, change]);
+
+  const navigateToViewCards = () =>
+    navigation.navigate('ViewCards', {
+      listId: cardList._id,
+      qrcode: cardList.qrCode,
+      title: cardList.title,
+    });
 
   return (
     <Container>
@@ -53,6 +63,12 @@ const CardDetails: React.FC<NavigationProps<'CardDetails'>> = ({route}) => {
         setChange={setChange}
         disabled={cardsExists}
         listId={cardList._id}
+      />
+      <Button
+        text="Ver Cartelas"
+        bg={colors.info}
+        onPress={navigateToViewCards}
+        disabled={!cardsExists}
       />
       <Button
         text="Baixar Cartelas"

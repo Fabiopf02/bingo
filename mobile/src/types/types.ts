@@ -7,6 +7,12 @@ export type User = {
   name: string;
 };
 
+export interface IViewCardsParams {
+  listId: string;
+  title: string;
+  qrcode: boolean;
+}
+
 export interface ICreateUserResponse {
   _id: string;
   token: string;
@@ -19,6 +25,15 @@ export type ICardList = {
   text: string;
   qrCode: boolean;
   numberOfCards: number;
+  createdAt: Date;
+  updatedAt: Date;
+};
+
+export type ICard = {
+  _id: string;
+  cardListId: string;
+  code: number;
+  numbers: number[][];
   createdAt: Date;
   updatedAt: Date;
 };
