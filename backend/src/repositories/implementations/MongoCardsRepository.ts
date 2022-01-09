@@ -25,7 +25,9 @@ export class MongoCardRepository implements ICardsRepository {
   }
 
   async findByList(listId: string): Promise<CardDocument[]> {
-    const cards = await CardSchema.find({ cardListId: listId });
+    const cards = await CardSchema.find({ cardListId: listId }).sort({
+      code: 'asc',
+    });
 
     return cards;
   }
